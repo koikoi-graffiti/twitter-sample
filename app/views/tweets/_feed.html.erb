@@ -1,0 +1,51 @@
+<div class="column">
+    <% if user_signed_in? %>
+    <article class="box media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <%= gravatar_image_tag(current_user.email, size: 64, alt: current_user.name) %>
+            </p>
+        </figure>
+
+        <div class="media-content">
+            <%= render 'tweets/form' %>
+        </div>
+    </article>
+    <% end %>
+
+    <% @tweets.each do | tweet |%>
+        <div class="box">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <%= gravatar_image_tag(current_user.email, size: 64, alt: current_user.name) %>
+                    </figure>
+                </div>
+
+                <div class="media-content">
+                    <div class="content">
+                        <strong class=""><%= tweet.user.name %></strong><br/>
+                        <small class=""><%= tweet.user.username %></small><br/>
+                        <p class=""><%= tweet.tweet %></p>
+                    </div>
+                </div>
+
+                <nav class="level">
+                        <div class="level-left is-mobile">
+                            <%= link_to tweet, class: "level-item" do %>
+                                <span class="icon"><i class="fa fa-link" aria-hidden="true"></i></span>
+                            <% end %>
+
+                            <%= link_to edit_tweet_path(tweet), class: "level-item" do %>
+                                <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                            <% end %>
+
+                            <%= link_to tweet, method: :delete, data: { confirm: "Are you sure you want to delete this tweeet?"} do %>
+                                <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                            <% end %>
+                        </div>
+                    </nav>
+            </article>
+        </div>
+    <% end %>
+</div>
